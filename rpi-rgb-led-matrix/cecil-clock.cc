@@ -15,7 +15,7 @@
 
 using namespace rgb_matrix;
 
-static int usage(const char *progname) {
+/*static int usage(const char *progname) {
   fprintf(stderr, "usage: %s [options]\n", progname);
   fprintf(stderr, "Reads text from stdin and displays it. "
           "Empty string: clear screen\n");
@@ -28,7 +28,7 @@ static int usage(const char *progname) {
           "\t-y <y-origin> : Y-Origin of displaying text (Default: 0)\n"
           "\t-C <r,g,b>    : Color. Default 255,255,0\n");
   return 1;
-}
+}*/
 
 static bool parseColor(Color *c, const char *str) {
   return sscanf(str, "%hhu,%hhu,%hhu", &c->r, &c->g, &c->b) == 3;
@@ -36,32 +36,17 @@ static bool parseColor(Color *c, const char *str) {
 
 int main(int argc, char *argv[]) {
   Color color(255, 255, 0);
-  const char *bdf_font_file = NULL;
-  int rows = 32;
+  const char *bdf_font_file = "fonts/5x7.bdf";
+  int rows = 16;
   int chain = 1;
   int x_orig = 0;
   int y_orig = -1;
 
   int opt;
-  while ((opt = getopt(argc, argv, "r:c:x:y:f:C:")) != -1) {
-    switch (opt) {
-    case 'r': rows = atoi(optarg); break;
-    case 'c': chain = atoi(optarg); break;
-    case 'x': x_orig = atoi(optarg); break;
-    case 'y': y_orig = atoi(optarg); break;
-    case 'f': bdf_font_file = strdup(optarg); break;
-    case 'C':
-      if (!parseColor(&color, optarg)) {
-        fprintf(stderr, "Invalid color spec.\n");
-        return usage(argv[0]);
-      }
-      break;
-    }
-  }
 
   if (bdf_font_file == NULL) {
     fprintf(stderr, "Need to specify BDF font-file with -f\n");
-    return usage(argv[0]);
+    //return usage(argv[0]);
   }
 
   /*
@@ -70,7 +55,7 @@ int main(int argc, char *argv[]) {
   rgb_matrix::Font font;
   if (!font.LoadFont(bdf_font_file)) {
     fprintf(stderr, "Couldn't load font '%s'\n", bdf_font_file);
-    return usage(argv[0]);
+    //return usage(argv[0]);
   }
 
   /*
