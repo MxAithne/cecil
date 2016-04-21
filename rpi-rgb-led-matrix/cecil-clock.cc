@@ -21,7 +21,8 @@ static bool parseColor(Color *c, const char *str) {
 }
 
 int main(int argc, char *argv[]) {
-  Color color(255, 255, 0);
+  Color timecolor(255, 255, 0);
+  Color messagecolor(0, 0, 255);
   const char *bdf_font_file = "fonts/5x7.bdf";
   int rows = 16;
   int chain = 1;
@@ -54,10 +55,10 @@ int main(int argc, char *argv[]) {
    */
   RGBMatrix *canvas = new RGBMatrix(&io, rows, chain);
 
-  bool all_extreme_colors = true;
+/*  bool all_extreme_colors = true;
   all_extreme_colors &= color.r == 0 || color.r == 255;
   all_extreme_colors &= color.g == 0 || color.g == 255;
-  all_extreme_colors &= color.b == 0 || color.b == 255;
+  all_extreme_colors &= color.b == 0 || color.b == 255;*/
   if (all_extreme_colors)
     canvas->SetPWMBits(1);
 
@@ -73,13 +74,12 @@ int main(int argc, char *argv[]) {
   now_tm = localtime(&now);
   hour = now_tm->tm_hour;
   minute = now_tm->tm_min;
-  /*struct tm *tm_struct = localtime(time(NULL));
-  int hour = localtime(time(NULL))->tm_hour;
-  int minute = localtime(time(NULL))->tm_min;*/
+  
   char curtime[5];
   sprintf(curtime, "%d:%d", hour, minute);
 
-    rgb_matrix::DrawText(canvas, font, 0, 0 + font.baseline(), color, curtime);
+    rgb_matrix::DrawText(canvas, font, 0, 0 + font.baseline(), timecolor, curtime);
+	rgb_matrix::DrawText(canvas, font, 0, 8 + font.baseline(), messagecolor, "Message");
 	sleep(10);
 
   // Finished. Shut down the RGB matrix.
