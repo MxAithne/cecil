@@ -79,7 +79,7 @@ int main(int argc, char *argv[]) {
   char curtime[5];
   sprintf(curtime, "%d:%d", hour, minute);
 
-    rgb_matrix::DrawText(canvas, font, x, y + font.baseline(), color, curtime);
+    rgb_matrix::DrawText(canvas, font, 0, 0 + font.baseline(), color, curtime);
 	sleep(10);
 
   // Finished. Shut down the RGB matrix.
