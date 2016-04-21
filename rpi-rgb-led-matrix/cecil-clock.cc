@@ -12,6 +12,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
+#include <time.h>
 
 using namespace rgb_matrix;
 
@@ -80,7 +81,13 @@ int main(int argc, char *argv[]) {
     }
     if (line_empty)
       continue;*/
-    rgb_matrix::DrawText(canvas, font, x, y + font.baseline(), color, "Hello");
+  struct tm *tm_struct = localtime(time(NULL));
+  int hour = tm_struct->tm_hour;
+  int minute = tm_struct->tm_min;
+  char curtime[5];
+  sprintf(curtime, "%d:%d", hour, minute);
+
+    rgb_matrix::DrawText(canvas, font, x, y + font.baseline(), color, curtime);
 	sleep(10);
 /*    y += font.height();
   }*/
