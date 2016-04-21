@@ -81,9 +81,9 @@ int main(int argc, char *argv[]) {
     }
     if (line_empty)
       continue;*/
-  struct tm *tm_struct = localtime(time(NULL));
-  int hour = tm_struct->tm_hour;
-  int minute = tm_struct->tm_min;
+  //struct tm *tm_struct = localtime(time(NULL));
+  int hour = localtime(time(NULL))->tm_hour;
+   int minute = localtime(time(NULL))->tm_min;
   char curtime[5];
   sprintf(curtime, "%d:%d", hour, minute);
 
