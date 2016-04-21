@@ -64,33 +64,23 @@ int main(int argc, char *argv[]) {
   const int x = x_orig;
   int y = y_orig;
 
-/*  if (isatty(STDIN_FILENO)) {
-    // Only give a message if we are interactive. If connected via pipe, be quiet
-    printf("Enter lines. Full screen or empty line clears screen.\n"
-           "Supports UTF-8. CTRL-D for exit.\n");
-  }*/
+  time_t now;
+  struct tm *now_tm;
+  int hour;
+  int minute;
 
-  /*char line[1024];
-  while (fgets(line, sizeof(line), stdin)) {
-    const size_t last = strlen(line);
-    if (last > 0) line[last - 1] = '\0';  // remove newline.
-    bool line_empty = strlen(line) == 0;
-    if ((y + font.height() > canvas->height()) || line_empty) {
-      canvas->Clear();
-      y = y_orig;
-    }
-    if (line_empty)
-      continue;*/
-  //struct tm *tm_struct = localtime(time(NULL));
+  now = time(NULL);
+  now_tm = localtime(&now);
+  hour = now_tm->tm_hour;
+  minute = now_tm->tm_min;
+  /*struct tm *tm_struct = localtime(time(NULL));
   int hour = localtime(time(NULL))->tm_hour;
-   int minute = localtime(time(NULL))->tm_min;
+  int minute = localtime(time(NULL))->tm_min;*/
   char curtime[5];
   sprintf(curtime, "%d:%d", hour, minute);
 
     rgb_matrix::DrawText(canvas, font, x, y + font.baseline(), color, curtime);
 	sleep(10);
-/*    y += font.height();
-  }*/
 
   // Finished. Shut down the RGB matrix.
   canvas->Clear();
