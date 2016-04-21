@@ -15,21 +15,6 @@
 
 using namespace rgb_matrix;
 
-/*static int usage(const char *progname) {
-  fprintf(stderr, "usage: %s [options]\n", progname);
-  fprintf(stderr, "Reads text from stdin and displays it. "
-          "Empty string: clear screen\n");
-  fprintf(stderr, "Options:\n"
-          "\t-f <font-file>: Use given font.\n"
-          "\t-r <rows>     : Display rows. 16 for 16x32, 32 for 32x32. "
-          "Default: 32\n"
-          "\t-c <chained>  : Daisy-chained boards. Default: 1.\n"
-          "\t-x <x-origin> : X-Origin of displaying text (Default: 0)\n"
-          "\t-y <y-origin> : Y-Origin of displaying text (Default: 0)\n"
-          "\t-C <r,g,b>    : Color. Default 255,255,0\n");
-  return 1;
-}*/
-
 static bool parseColor(Color *c, const char *str) {
   return sscanf(str, "%hhu,%hhu,%hhu", &c->r, &c->g, &c->b) == 3;
 }
@@ -46,7 +31,6 @@ int main(int argc, char *argv[]) {
 
   if (bdf_font_file == NULL) {
     fprintf(stderr, "Need to specify BDF font-file with -f\n");
-    //return usage(argv[0]);
   }
 
   /*
@@ -55,7 +39,6 @@ int main(int argc, char *argv[]) {
   rgb_matrix::Font font;
   if (!font.LoadFont(bdf_font_file)) {
     fprintf(stderr, "Couldn't load font '%s'\n", bdf_font_file);
-    //return usage(argv[0]);
   }
 
   /*
@@ -80,13 +63,13 @@ int main(int argc, char *argv[]) {
   const int x = x_orig;
   int y = y_orig;
 
-  if (isatty(STDIN_FILENO)) {
+/*  if (isatty(STDIN_FILENO)) {
     // Only give a message if we are interactive. If connected via pipe, be quiet
     printf("Enter lines. Full screen or empty line clears screen.\n"
            "Supports UTF-8. CTRL-D for exit.\n");
-  }
+  }*/
 
-  char line[1024];
+  /*char line[1024];
   while (fgets(line, sizeof(line), stdin)) {
     const size_t last = strlen(line);
     if (last > 0) line[last - 1] = '\0';  // remove newline.
@@ -96,10 +79,11 @@ int main(int argc, char *argv[]) {
       y = y_orig;
     }
     if (line_empty)
-      continue;
-    rgb_matrix::DrawText(canvas, font, x, y + font.baseline(), color, line);
-    y += font.height();
-  }
+      continue;*/
+    rgb_matrix::DrawText(canvas, font, x, y + font.baseline(), color, "Hello");
+	sleep(10);
+/*    y += font.height();
+  }*/
 
   // Finished. Shut down the RGB matrix.
   canvas->Clear();
